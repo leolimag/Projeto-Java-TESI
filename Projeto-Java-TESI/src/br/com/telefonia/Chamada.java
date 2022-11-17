@@ -30,7 +30,7 @@ public class Chamada {
 	
 	@Override
 	public String toString() {
-		String novaData = new SimpleDateFormat("dd/MM/yyyy").format(data.getTime());
+		String novaData = new SimpleDateFormat("dd/MM/yyyy").format(data);
 		return "data: " + novaData + ", " + this.duracao + " minutos de duração.";
 	}
 	
