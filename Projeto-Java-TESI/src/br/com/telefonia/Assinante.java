@@ -13,13 +13,13 @@ public class Assinante {
 		this.nome = nome;
 		this.numero = numero;
 		this.numChamadas = numChamadas;
-		this.chamadas = new Chamada[this.numChamadas];
+		this.chamadas = new Chamada[numChamadas];
 	}
 
 	public long getCpf() {
 		return cpf;
 	}
-	
+	@Override
 	public String toString(){
 		return "nome: " + nome + "; número: " + numero + "; cpf: " + cpf;
 	}
