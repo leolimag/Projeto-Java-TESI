@@ -2,6 +2,4 @@
 Projeto Java de Programação Orientada a Objetos. 
 
 Integrantes:
-Leonardo Lima
-Mateus Dobbins
-Pedro Gregorio
+Leonardo Lima, Mateus Dobbins e Pedro Gregorio
