@@ -1,6 +1,7 @@
 package br.com.telefonia;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Chamada {
@@ -29,15 +30,16 @@ public class Chamada {
 	
 	@Override
 	public String toString() {
-		SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
-		return "data: " + this.data + ",  " + this.duracao + " minutos de duração.";
+		String novaData = new SimpleDateFormat("dd/MM/yyyy").format(data);
+		return "data: " + novaData + ", " + this.duracao + " minutos de duração.";
 	}
-	/*
+	
 	public static void main(String[]args) {
-		Date d = new Date();
+		Calendar ca = Calendar.getInstance();
+		Date d = ca.getTime();
 		Chamada c = new Chamada(d, 50);
 		System.out.println(c.toString());
 	}
-	*/
+	
 	
 }
