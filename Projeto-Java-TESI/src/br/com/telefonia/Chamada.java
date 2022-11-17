@@ -2,21 +2,20 @@ package br.com.telefonia;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Chamada {
 	
-	private Date data;
+	private Calendar data;
 	private int duracao;
 
 	
-	public Chamada(Date data, int duracao) {
+	public Chamada(Calendar data, int duracao) {
 		super();
 		this.data = data;
 		this.duracao = duracao;
 	}
 
-	public Date getData() {
+	public Calendar getData() {
 		return data;
 	}
 
