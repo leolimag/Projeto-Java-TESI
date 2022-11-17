@@ -33,13 +33,13 @@ public class Chamada {
 		String novaData = new SimpleDateFormat("dd/MM/yyyy").format(data);
 		return "data: " + novaData + ", " + this.duracao + " minutos de duração.";
 	}
-	
+	/*
 	public static void main(String[]args) {
 		Calendar ca = Calendar.getInstance();
 		Date d = ca.getTime();
 		Chamada c = new Chamada(d, 50);
 		System.out.println(c.toString());
 	}
-	
+	*/
 	
 }
