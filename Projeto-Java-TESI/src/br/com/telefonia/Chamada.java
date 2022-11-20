@@ -1,21 +1,22 @@
 package br.com.telefonia;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Chamada {
-	
-	private Calendar data;
+		
+	private GregorianCalendar data;
 	private int duracao;
 
 	
-	public Chamada(Calendar data, int duracao) {
+	public Chamada(GregorianCalendar data, int duracao) {
 		super();
 		this.data = data;
 		this.duracao = duracao;
 	}
 
-	public Calendar getData() {
+	public GregorianCalendar getData() {
 		return data;
 	}
 
@@ -29,16 +30,9 @@ public class Chamada {
 	
 	@Override
 	public String toString() {
+		Date data = this.data.getTime();
 		String novaData = new SimpleDateFormat("dd/MM/yyyy").format(data);
 		return "data: " + novaData + ", " + this.duracao + " minutos de duração.";
 	}
-	/*
-	public static void main(String[]args) {
-		Calendar ca = Calendar.getInstance();
-		Date d = ca.getTime();
-		Chamada c = new Chamada(d, 50);
-		System.out.println(c.toString());
-	}
-	*/
 	
 }

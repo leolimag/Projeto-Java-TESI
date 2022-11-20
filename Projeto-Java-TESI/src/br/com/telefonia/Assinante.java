@@ -1,11 +1,11 @@
 package br.com.telefonia;
 
-public class Assinante {
+public abstract class Assinante {
 	private long cpf;
 	private String nome;
 	private int numero;
 	protected int numChamadas;
-	private Chamada[] chamadas; 
+	protected Chamada[] chamadas; 
 	
 	public Assinante(long cpf, String nome, int numero, int numChamadas) {
 		super();
@@ -19,6 +19,7 @@ public class Assinante {
 	public long getCpf() {
 		return cpf;
 	}
+	
 	@Override
 	public String toString(){
 		return "nome: " + nome + "; número: " + numero + "; cpf: " + cpf;
