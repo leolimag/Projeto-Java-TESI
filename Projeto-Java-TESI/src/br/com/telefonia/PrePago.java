@@ -1,6 +1,5 @@
 package br.com.telefonia;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class PrePago extends Assinante {
@@ -16,19 +15,41 @@ public class PrePago extends Assinante {
 		this.numRecargas = numRecargas;
 	}
 	
-	public void recarregar(GregorianCalendar data, float valor) {
-		
-	}
-	
-	public boolean fazerChamada(Date data, int duracao) {
-		if(duracao > 10 ) {
+	public boolean recarregar(GregorianCalendar data, float valor) {
+		if (this.recargas.length < this.numRecargas) {
+			Recarga r = new Recarga(data,valor);
+			this.recargas[this.recargas.length - 1] = r;
+			this.numRecargas++;
+			this.creditos = this.creditos + valor;
 			return true;
+		} else {
+			return false; //se for falso, imprimir uma mensagem no main 
 		}
-		return false;
 	}
 	
-	public void imprimirFatura(int mes) {
-		
+	public boolean fazerChamada(GregorianCalendar data, int duracao) { //verificar o retorno deste método
+		float custo = duracao * 1.45f;
+		if (this.chamadas.length < this.numChamadas && this.creditos > 1.45f) {
+			Chamada c = new Chamada(data, duracao);
+			this.chamadas[this.chamadas.length - 1] = c;
+			return true;
+		} else {
+			return false; //se for false, imprimir uma mensagem no main 
+		}
+	}
+	
+	public String imprimirFatura(int mes) {
+		for (int i = 0; i < this.chamadas.length; i++) {
+			if (this.chamadas[i].getData().get(GregorianCalendar.MONTH) == mes) {
+				return "Assinante - " + this.toString() + "|" + "Chamada - " + this.chamadas.toString();
+			}
+		}
+		for (int i = 0; i < this.recargas.length; i++) {
+			if (this.recargas[i].getData().get(GregorianCalendar.MONTH) == mes) {
+				return "Recarga - " + this.recargas.toString();
+			}
+		}
+		return null;
 	}
 
 }

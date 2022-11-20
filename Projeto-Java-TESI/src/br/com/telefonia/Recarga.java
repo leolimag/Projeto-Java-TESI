@@ -1,5 +1,7 @@
 package br.com.telefonia;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Recarga {
@@ -23,7 +25,9 @@ public class Recarga {
 	
 	@Override
 	public String toString(){
-		return "Data: " + data + "; número: " + numero + "; cpf: " + cpf;
+		Date data = this.data.getTime();
+;		String novaData = new SimpleDateFormat("dd/MM/yyyy").format(data);
+		return "Data: " + novaData + ", valor de R$" + this.valor + ".";
 	}
 	
 	
