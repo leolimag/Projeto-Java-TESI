@@ -8,15 +8,15 @@ public class PrePago extends Assinante {
 	private int numRecargas;
 	private Recarga[] recargas;
 
-	public PrePago(long cpf, String nome, int numero, int numChamadas, float creditos, int numRecargas) {
-		super(cpf, nome, numero, numChamadas);
+	public PrePago(long cpf, String nome, int numero) {
+		super(cpf, nome, numero);
 		this.recargas = new Recarga[numRecargas];
-		this.creditos = creditos;
-		this.numRecargas = numRecargas;
+		//this.creditos = creditos;
+		//this.numRecargas = numRecargas;
 	}
 	
 	public boolean recarregar(GregorianCalendar data, float valor) {
-		if (this.recargas.length < this.numRecargas) {
+		if (this.recargas.length < this.numRecargas) { //ver aqui 
 			Recarga r = new Recarga(data,valor);
 			this.recargas[this.recargas.length - 1] = r;
 			this.numRecargas++;
@@ -27,11 +27,13 @@ public class PrePago extends Assinante {
 		}
 	}
 	
-	public boolean fazerChamada(GregorianCalendar data, int duracao) { //verificar o retorno deste método
+	public boolean fazerChamada(GregorianCalendar data, int duracao) { 
 		float custo = duracao * 1.45f;
-		if (this.chamadas.length < this.numChamadas && this.creditos > 1.45f) {
+		if (this.chamadas.length < 10 && this.creditos > 1.45f) { //ver aqui
 			Chamada c = new Chamada(data, duracao);
 			this.chamadas[this.chamadas.length - 1] = c;
+			this.numChamadas++; //ou --?
+			this.creditos = this.creditos - custo;
 			return true;
 		} else {
 			return false; //se for false, imprimir uma mensagem no main 
@@ -50,6 +52,7 @@ public class PrePago extends Assinante {
 			}
 		}
 		return null;
+		// imprimir ainda o valor total de todas as ligações e recargas, além dos créditos
 	}
 
 }
