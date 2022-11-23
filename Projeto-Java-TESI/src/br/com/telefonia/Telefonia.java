@@ -14,27 +14,32 @@ public class Telefonia {
 		this.pospagos = new PosPago[this.numPosPagos];
 	}
 
-	public boolean cadastrarAssinante(String nome, long cpf, int numero) {
-		if (this.prepagos.length < 10) {
-			PrePago pre = new PrePago(cpf, nome, numero);
-			this.prepagos[this.prepagos.length - 1] = pre;
-			this.numPrePagos++;
-			return true;
-		} else {
-			return false; //mensagem na main
+	public boolean cadastrarAssinante(String nome, long cpf, int numero, int numChamadas, int numRecargas, float creditos) {
+		for (int i = 0; i < this.prepagos.length; i++) {
+			if (this.prepagos[i] == null) {
+				PrePago pre = new PrePago(cpf, nome, numero, numChamadas, numRecargas, creditos);
+				this.prepagos[i] = pre;
+				//this.numPrePagos++;
+				return true;
+			} else {
+				return false; //mensagem na main
+			}
 		}
-
+		return false;
 	}
 
-	public boolean cadastrarAssinante(String nome, long cpf, int numero, float assinatura) {
-		if (this.pospagos.length < 10) {
-			PosPago pos = new PosPago(cpf, nome, numero, assinatura);
-			this.pospagos[this.pospagos.length - 1] = pos;
-			this.numPosPagos++;
-			return true;
-		} else {
-			return false; // mensagem na main
+	public boolean cadastrarAssinante(String nome, long cpf, int numero, float assinatura, int numChamadas) {
+		for (int i = 0; i < this.pospagos.length; i++) {
+			if (this.pospagos[i] == null) {
+				PosPago pos = new PosPago(cpf, nome, numero, assinatura, numChamadas);
+				this.pospagos[i] = pos;
+				//this.numPosPagos++;
+				return true;
+			} else {
+				return false; // mensagem na main 
+			}
 		}
+		return false;
 	}
 	
 	public String listarAssinantes() {
@@ -48,11 +53,35 @@ public class Telefonia {
 		return null;
 	}
 	
-	public void fazerChamada(int tipo, long cpf, int duracao, GregorianCalendar data) {
+	public String fazerChamada(int tipo, long cpf, int duracao, GregorianCalendar data) {
 		if (tipo == 1) { //prepago
 			if (this.localizarPrePago(cpf) != null) {
-				
+				PrePago ass = this.localizarPrePago(cpf);
+				ass.fazerChamada(data, duracao);
+				return "Chamada realizada!";
+			} else {
+				return "Assinante não encontrado. Tente outro CPF.";
 			}
+		} else if (tipo == 2) {
+			if (this.localizarPosPago(cpf) != null) {
+				PosPago ass = this.localizarPosPago(cpf);
+				ass.fazerChamada(data, duracao);
+				return "Chamada realizada!";
+			} else {
+				return "Assinante não encontrado. Tente outro CPF.";
+			}
+		} else {
+			return "Opção inválida. Escolha outra opção.";
+		}
+	}
+	
+	public String fazerRecarga(long cpf, float valor, GregorianCalendar data) {
+		if (this.localizarPrePago(cpf) != null) {
+			PrePago ass = this.localizarPrePago(cpf);
+			ass.recarregar(data, valor);
+			return "Recarga realizada!"; //essa mensagem ou a do método "recarregar"? //todas as mensagens no main?
+		} else {
+			return "Assinante não encontrado. Tente outro CPF.";
 		}
 	}
 	

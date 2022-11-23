@@ -5,21 +5,24 @@ import java.util.GregorianCalendar;
 public class PosPago extends Assinante {
 	private float assinatura;
 
-	public PosPago(long cpf, String nome, int numero, float assinatura) {
-		super(cpf, nome, numero);
+	public PosPago(long cpf, String nome, int numero, float assinatura,int numChamadas) {
+		super(cpf, nome, numero, numChamadas);
 		this.assinatura = assinatura;
 	}
 	
 	public boolean fazerChamada(GregorianCalendar data, int duracao) {
 		float custo = duracao * 1.04f;
-		if (this.chamadas.length < 10) { //ver aqui
-			Chamada c = new Chamada(data, duracao); 
-			this.chamadas[this.chamadas.length -1] = c;
-			this.numChamadas++; //ou --?
-			return true;
-		} else {
-			return false; //se for false, imprimir uma mensagem no main 
+		for (int i = 0; i < this.chamadas.length; i++) {
+			if (this.chamadas[i] == null) {
+				Chamada c = new Chamada(data, duracao);
+				this.chamadas[i] = c;
+				//this.numChamadas++;
+				return true;
+			} else {
+				return false; //se for false, imprimir uma mensagem no main
+			}
 		}
+		return false;
 	}
 	
 	public String imprimirFatura(int mes) {
