@@ -8,10 +8,12 @@ public class Telefonia {
 	private int numPrePagos;
 	private int numPosPagos;
 
-	public Telefonia() {
+	public Telefonia(int numPrePagos, int numPosPagos) {
 		super();
-		this.prepagos = new PrePago[this.numPrePagos]; // verificar tamanho do vetors
-		this.pospagos = new PosPago[this.numPosPagos];
+		this.prepagos = new PrePago[numPrePagos]; 
+		this.pospagos = new PosPago[numPosPagos];
+		this.numPosPagos = numPosPagos;
+		this.numPrePagos = numPrePagos;
 	}
 
 	public boolean cadastrarAssinante(String nome, long cpf, int numero, int numChamadas, int numRecargas, float creditos) {
@@ -44,11 +46,15 @@ public class Telefonia {
 	
 	public String listarAssinantes() {
 		for (int i = 0; i < this.prepagos.length; i++) {
-			return this.prepagos[i].toString();
+			if (this.prepagos[i] != null) {
+				return this.prepagos[i].toString();
+			}
 		}
 		System.out.println(); //verificar
 		for (int i = 0; i < this.pospagos.length; i++) {
-			return this.pospagos[i].toString();
+			if (this.pospagos[i] != null) {
+				return this.pospagos[i].toString();
+			}	
 		}
 		return null;
 	}
@@ -107,7 +113,14 @@ public class Telefonia {
 		return null;
 	}
 	
-	
+	public void imprimirFaturas(int mes) {
+		for (int i = 0; i < this.prepagos.length; i++) {
+			this.prepagos[i].imprimirFatura(mes);
+		}
+		for (int i = 0; i < this.pospagos.length; i++) {
+			this.pospagos[i].imprimirFatura(mes);
+		}
+	}
 	
 	
 	
