@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		/* teste */
+		/* teste 
 		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
 		int c = 0;
@@ -19,7 +19,7 @@ public class Main {
 				System.out.println("digite a duração: /n");
 				int d = s.nextInt();
 				GregorianCalendar ca = new GregorianCalendar();
-				Chamada ch = new Chamada(ca,d);
+				Chamada ch = new Chamada(ca, d);
 				System.out.println(ch.toString());
 				chamada[x] = ch;
 				x++;
@@ -28,6 +28,30 @@ public class Main {
 		for (int i = 0; i < chamada.length; i++) {
 			System.out.println(chamada[i]);
 		}
+		*/
+		
+		Telefonia t = new Telefonia(10, 10);
+		t.cadastrarAssinante("Leonardo", 475731378, 139811, 40f, 10);
+		t.cadastrarAssinante("Beatriz", 39898360, 1399787, 10, 10, 50);
+
+		System.out.println(t.listarAssinantes());
+		
+		/*
+		for (int i = 0; i < t.pospagos.length; i++) {
+			System.out.println(t.pospagos[i]);
+		}
+		*/
+		
+		t.imprimirFaturas(1);
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 }
