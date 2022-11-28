@@ -1,5 +1,6 @@
 package br.com.telefonia;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -31,7 +32,7 @@ public class Main {
 		*/
 		
 		Telefonia t = new Telefonia(10, 10);
-		t.cadastrarAssinante("Leonardo", 475731378, 139811, 40f, 10);
+		//t.cadastrarAssinante("Leonardo", 475731378, 139811, 40f, 10);
 		t.cadastrarAssinante("Beatriz", 39898360, 1399787, 10, 10, 50);
 
 		System.out.println(t.listarAssinantes());
@@ -42,15 +43,14 @@ public class Main {
 		}
 		*/
 		
-		t.imprimirFaturas(1);
 		
+		System.out.println(t.fazerChamada(1, 39898360, 50, new GregorianCalendar()));
+		System.out.println(t.fazerRecarga(39898360, 20, new GregorianCalendar()));
+		t.imprimirFaturas(10);
 		
+		GregorianCalendar g = new GregorianCalendar();
 		
-		
-		
-		
-		
-		
+		System.out.println(g);
 		
 	}
 

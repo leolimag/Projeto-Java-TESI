@@ -27,8 +27,10 @@ public class PosPago extends Assinante {
 	
 	public String imprimirFatura(int mes) {
 		for (int i = 0; i < this.chamadas.length; i++) {
-			if (this.chamadas[i].getData().get(GregorianCalendar.MONTH) == mes) {
-				return "Assinante - " + this.toString() + "|" + "Chamada - " + this.chamadas.toString();
+			if (this.chamadas[i] != null) {
+				if (this.chamadas[i].getData().get(GregorianCalendar.MONTH) == mes) {
+					return "Assinante - " + this.toString() + "|" + "Chamada - " + this.chamadas.toString();
+				}
 			}
 		}
 		return "Valor total da fatura: " + this.assinatura; //imprimir total (calcular ligações)
