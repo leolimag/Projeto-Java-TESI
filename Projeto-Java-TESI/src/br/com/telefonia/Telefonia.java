@@ -1,6 +1,7 @@
 package br.com.telefonia;
 
 import java.util.GregorianCalendar;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Telefonia {
@@ -17,30 +18,31 @@ public class Telefonia {
 		this.numPrePagos = numPrePagos;
 	}
 
-	public boolean cadastrarAssinante(String nome, long cpf, int numero, int numChamadas, int numRecargas,
+	public boolean cadastrarAssinante(String nome, long cpf, long numero, int numChamadas, int numRecargas,
 			float creditos) {
+		this.numPrePagos++;
 		for (int i = 0; i < this.prepagos.length; i++) {
 			if (this.prepagos[i] == null) {
 				PrePago pre = new PrePago(cpf, nome, numero, numChamadas, numRecargas, creditos);
 				this.prepagos[i] = pre;
-				// this.numPrePagos++;
 				return true;
+				
 			} else {
-				return false; // mensagem na main
+				return false;
 			}
 		}
 		return false;
 	}
 
-	public boolean cadastrarAssinante(String nome, long cpf, int numero, float assinatura, int numChamadas) {
+	public boolean cadastrarAssinante(String nome, long cpf, long numero, float assinatura, int numChamadas) {
+		this.numPosPagos++;
 		for (int i = 0; i < this.pospagos.length; i++) {
 			if (this.pospagos[i] == null) {
 				PosPago pos = new PosPago(cpf, nome, numero, assinatura, numChamadas);
 				this.pospagos[i] = pos;
-				// this.numPosPagos++;
 				return true;
 			} else {
-				return false; // mensagem na main
+				return false;
 			}
 		}
 		return false;
@@ -52,34 +54,34 @@ public class Telefonia {
 				return this.prepagos[i].toString();
 			}
 		}
-		System.out.println(); // verificar
+		System.out.println();
 		for (int i = 0; i < this.pospagos.length; i++) {
 			if (this.pospagos[i] != null) {
 				return this.pospagos[i].toString();
 			}
 		}
-		return null;
+		return "Não há assinantes cadastrados.";
 	}
 
 	public String fazerChamada(int tipo, long cpf, int duracao, GregorianCalendar data) {
-		if (tipo == 1) { // prepago
+		if (tipo == 1) { 
 			if (this.localizarPrePago(cpf) != null) {
 				PrePago ass = this.localizarPrePago(cpf);
 				ass.fazerChamada(data, duracao);
-				return "Chamada realizada!";
+				return "Chamada realizada!\n";
 			} else {
-				return "Assinante não encontrado. Tente outro CPF.";
+				return "Assinante não encontrado. Tente outro CPF.\n";
 			}
 		} else if (tipo == 2) {
 			if (this.localizarPosPago(cpf) != null) {
 				PosPago ass = this.localizarPosPago(cpf);
 				ass.fazerChamada(data, duracao);
-				return "Chamada realizada!";
+				return "Chamada realizada!\n";
 			} else {
-				return "Assinante não encontrado. Tente outro CPF.";
+				return "Assinante não encontrado. Tente outro CPF.\n";
 			}
 		} else {
-			return "Opção inválida. Escolha outra opção.";
+			return "Opção inválida. Escolha outra opção.\n";
 		}
 	}
 
@@ -101,9 +103,7 @@ public class Telefonia {
 		for (int i = 0; i < this.prepagos.length; i++) {
 			if (this.prepagos[i].getCpf() == cpf) {
 				return this.prepagos[i];
-			} else {
-				return null; // precisa?
-			}
+			} 
 		}
 		return null;
 	}
@@ -112,9 +112,7 @@ public class Telefonia {
 		for (int i = 0; i < this.pospagos.length; i++) {
 			if (this.pospagos[i].getCpf() == cpf) {
 				return this.pospagos[i];
-			} else {
-				return null;
-			}
+			} 
 		}
 		return null;
 	}
@@ -122,18 +120,25 @@ public class Telefonia {
 	public void imprimirFaturas(int mes) {
 		for (int i = 0; i < this.prepagos.length; i++) {
 			if (this.prepagos[i] != null) {
-				this.prepagos[i].imprimirFatura(mes);
+				//this.prepagos[i].imprimirFatura(mes);
+				System.out.println(this.prepagos[i].imprimirFatura(mes));
 			}
 
 		}
 		for (int i = 0; i < this.pospagos.length; i++) {
 			if (this.pospagos[i] != null) {
-				this.pospagos[i].imprimirFatura(mes);
+				System.out.println(this.pospagos[i].imprimirFatura(mes));
+				//this.pospagos[i].imprimirFatura(mes);
 			}
 		}
 	}
 
 	public static void main(String[] args) {
+		long cpf;
+		int tipo;
+		String nome;
+		long numTelefone;
+		GregorianCalendar calendar;
 		Scanner s = new Scanner(System.in);
 		int opcao = 1;
 		Telefonia t = new Telefonia(10,10);
@@ -144,37 +149,74 @@ public class Telefonia {
 			switch (opcao) {
 				case 1:
 					System.out.println("Qual o tipo de assinante?\n 1- Pré Pago\n 2- Pós Pago ");
-					int tipo = s.nextInt();
+					tipo = s.nextInt();
 					if (tipo == 1) {
-						boolean cadastro = t.cadastrarAssinante("Beatriz", 39898360, 1399787, 10, 10, 50);
-						if (cadastro == true) {
-							t.cadastrarAssinante("Beatriz", 39898360, 1399787, 10, 10, 50);	
-							System.out.println("Cadastro completo.");
+						System.out.println("Insira seu nome: ");
+						nome = s.next();
+						System.out.println("Insira seu CPF: ");
+						cpf = s.nextLong();
+						System.out.println("Insira seu número de telefone: ");
+						numTelefone = s.nextLong();
+						boolean cadastro = t.cadastrarAssinante(nome, cpf, numTelefone, 10, 10, 50);
+						if (cadastro) {
+							t.cadastrarAssinante(nome, cpf, numTelefone, 10, 10, 50);
+							System.out.println("Cadastro completo.\n");
 						} else {
-							System.out.println("Cadastro incompleto.");
+							System.out.println("Cadastro incompleto.\n");
 						}
 						
 					} else if (tipo == 2) {
-						boolean cadastro = t.cadastrarAssinante("Leonardo", 475731378, 139811, 40f, 10);
-						if (cadastro == true) {
-							t.cadastrarAssinante("Leonardo", 475731378, 139811, 40f, 10);
-							System.out.println("Cadastro completo.");
+						System.out.println("Insira seu nome: ");
+						nome = s.next();
+						System.out.println("Insira seu CPF: ");
+						cpf = s.nextLong();
+						System.out.println("Insira seu número de telefone: ");
+						numTelefone = s.nextLong();
+						boolean cadastro = t.cadastrarAssinante(nome, cpf, numTelefone, 40f, 10);
+						if (cadastro) {
+							t.cadastrarAssinante(nome, cpf, numTelefone, 40f, 10);
+							System.out.println("Cadastro completo.\n");
 						} else {
-							System.out.println("Cadastro incompleto.");
+							System.out.println("Cadastro incompleto.\n");
 						}
 					} else {
 						System.out.println("Opção inexistente.");
 					}
 					break;
 				case 2: 
-					System.out.println(t.listarAssinantes());
-					System.out.println();
+					System.out.println(t.listarAssinantes() + "\n");
 					break;
 				case 3: 
-					long cpf = s.nextLong();
-					int tip = s.nextInt();
-					GregorianCalendar c = new GregorianCalendar();
-					t.fazerChamada(tip, cpf, 10, c);
+					System.out.println("Insira seu CPF: ");
+					cpf = s.nextLong();
+					System.out.println("Qual o tipo de assinante?\n 1- Pré Pago\n 2- Pós Pago");
+					tipo = s.nextInt();
+					calendar = new GregorianCalendar();
+					Random r = new Random();
+					System.out.println(t.fazerChamada(tipo, cpf, r.nextInt(60), calendar));
+					break;
+				case 4:
+					System.out.println("Insira seu CPF: ");
+					cpf = s.nextLong();
+					System.out.println("Insira o valor da recarga:");
+					float valor = s.nextFloat();
+					calendar = new GregorianCalendar();
+					t.fazerRecarga(cpf, valor, calendar);
+					break;
+				case 5:
+					System.out.println("Insira o número do mês correspondente à lista: \n0-JAN; \n1-FEV; \n2-MAR; \n3-ABR; \n4-MAI; \n5-JUN; \n6-JUL; \n7-AGO; \n8-SET; \n9-OUT; \n10-NOV; \n11-DEZ.");
+					int mes = s.nextInt();
+					if (mes >= 0 && mes <= 11 ) {
+						System.out.println("Faturas impressas: \n");
+						t.imprimirFaturas(mes);
+					} else {
+						System.out.println("Insira um número correspondente ao mês da lista.");
+					}
+					break;
+				case 0: 
+					System.out.println("Encerrando sistema.");
+				default: 
+					System.out.println("Insira uma opção válida.\n");
 			}
 		}
 
