@@ -8,7 +8,7 @@ public class PrePago extends Assinante {
 	private int numRecargas;
 	private Recarga[] recargas;
 
-	public PrePago(long cpf, String nome, int numero, int numChamadas, int numRecargas, float creditos) {
+	public PrePago(long cpf, String nome, long numero, int numChamadas, int numRecargas, float creditos) {
 		super(cpf, nome, numero, numChamadas);
 		this.recargas = new Recarga[numRecargas];
 		this.creditos = creditos;
@@ -44,11 +44,12 @@ public class PrePago extends Assinante {
 					return "Créditos insuficientes. Recarregue para fazer mais ligações!";
 				}
 			} else {
-				return "Não é possível realizar mais ligações. Limite alcançado."; // se for false, imprimir uma mensagem no main
+				return "Não é possível realizar mais ligações. Limite alcançado."; // se for false, imprimir uma
+																					// mensagem no main
 			}
 		}
 		return null;
-	}	
+	}
 
 	public String imprimirFatura(int mes) {
 		float totalC = 0;
@@ -59,10 +60,12 @@ public class PrePago extends Assinante {
 					int duracao = this.chamadas[i].getDuracao();
 					float custo = duracao * 1.45f;
 					totalC += custo;
-					return "Assinante - " + this.toString() + "|" + "Chamada - " + this.chamadas.toString();
+					return "Assinante - " + this.toString() + "\n" + "Chamada - " + this.chamadas[i].toString() + "\n";
+				} else {
+					return "Nenhuma chamada realizada neste mês.";
 				}
 			} else {
-				return null;
+				return "Não foi encontrada nenhuma chamada neste número.";
 			}
 		}
 		for (int i = 0; i < this.recargas.length; i++) {
@@ -71,9 +74,11 @@ public class PrePago extends Assinante {
 					float valor = this.recargas[i].getValor();
 					totalR += valor;
 					return "Recarga - " + this.recargas.toString();
-				}	
+				} else {
+					return "Nenhuma recarga realizada neste mês.";
+				}
 			} else {
-				return null;
+				return "Não foi encontrada nenhuma recarga neste número.";
 			}
 		}
 		return "Total chamada: " + totalC + " | " + "Total recarga: " + totalR + " | " + this.creditos;

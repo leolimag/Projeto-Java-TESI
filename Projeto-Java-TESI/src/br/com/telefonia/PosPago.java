@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 public class PosPago extends Assinante {
 	private float assinatura;
 
-	public PosPago(long cpf, String nome, int numero, float assinatura,int numChamadas) {
+	public PosPago(long cpf, String nome, long numero, float assinatura,int numChamadas) {
 		super(cpf, nome, numero, numChamadas);
 		this.assinatura = assinatura;
 	}
@@ -29,8 +29,12 @@ public class PosPago extends Assinante {
 		for (int i = 0; i < this.chamadas.length; i++) {
 			if (this.chamadas[i] != null) {
 				if (this.chamadas[i].getData().get(GregorianCalendar.MONTH) == mes) {
-					return "Assinante - " + this.toString() + "|" + "Chamada - " + this.chamadas.toString();
+					return "Assinante - " + this.toString() + "\n" + "Chamada - " + this.chamadas[i].toString() + "\n";
+				} else {
+					return "Nenhuma chamada realizada neste mês.";
 				}
+			} else {
+				return "Não foi encontrada nenhuma chamada neste número.";
 			}
 		}
 		return "Valor total da fatura: " + this.assinatura; //imprimir total (calcular ligações)
