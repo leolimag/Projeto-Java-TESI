@@ -14,53 +14,54 @@ public class Telefonia {
 		super();
 		this.prepagos = new PrePago[numPrePagos];
 		this.pospagos = new PosPago[numPosPagos];
-		this.numPosPagos = numPosPagos;
-		this.numPrePagos = numPrePagos;
 	}
 
-	public boolean cadastrarAssinante(String nome, long cpf, long numero, int numChamadas, int numRecargas,
+	public void cadastrarAssinante(String nome, long cpf, long numero, int numChamadas, int numRecargas,
 			float creditos) {
 		this.numPrePagos++;
-		for (int i = 0; i < this.prepagos.length; i++) {
+		for (int i = 0; i < this.numPrePagos; i++) {
 			if (this.prepagos[i] == null) {
 				PrePago pre = new PrePago(cpf, nome, numero, numChamadas, numRecargas, creditos);
 				this.prepagos[i] = pre;
-				return true;
-				
-			} else {
-				return false;
-			}
+				System.out.println("Cadastro realizado.");
+				//return true;
+			} //else {
+				//return false;
+			//}
 		}
-		return false;
+		//return false;
 	}
 
-	public boolean cadastrarAssinante(String nome, long cpf, long numero, float assinatura, int numChamadas) {
+	public void cadastrarAssinante(String nome, long cpf, long numero, float assinatura, int numChamadas) {
 		this.numPosPagos++;
-		for (int i = 0; i < this.pospagos.length; i++) {
+		for (int i = 0; i < this.numPosPagos; i++) {
 			if (this.pospagos[i] == null) {
 				PosPago pos = new PosPago(cpf, nome, numero, assinatura, numChamadas);
 				this.pospagos[i] = pos;
-				return true;
-			} else {
-				return false;
-			}
+				System.out.println("Cadastro realizado.");
+			} 
 		}
-		return false;
 	}
 
-	public String listarAssinantes() {
-		for (int i = 0; i < this.prepagos.length; i++) {
+	public void listarAssinantes() {
+		for (int i = 0; i < this.numPrePagos; i++) {
 			if (this.prepagos[i] != null) {
-				return this.prepagos[i].toString();
+				//return this.prepagos[i].toString();
+				System.out.println(this.prepagos[i].toString());
+				System.out.println();
+			} else {
+				System.out.println("Não há assinantes pré-pago cadastrados.");
 			}
 		}
-		System.out.println();
-		for (int i = 0; i < this.pospagos.length; i++) {
+		for (int i = 0; i < this.numPosPagos; i++) { 
 			if (this.pospagos[i] != null) {
-				return this.pospagos[i].toString();
+				//return this.pospagos[i].toString();
+				System.out.println(this.pospagos[i].toString());
+				System.out.println();
+			} else {
+				System.out.println("Não há assinantes pós-pago cadastrados.");
 			}
 		}
-		return "Não há assinantes cadastrados.";
 	}
 
 	public String fazerChamada(int tipo, long cpf, int duracao, GregorianCalendar data) {
@@ -157,14 +158,7 @@ public class Telefonia {
 						cpf = s.nextLong();
 						System.out.println("Insira seu número de telefone: ");
 						numTelefone = s.nextLong();
-						boolean cadastro = t.cadastrarAssinante(nome, cpf, numTelefone, 10, 10, 50);
-						if (cadastro) {
-							t.cadastrarAssinante(nome, cpf, numTelefone, 10, 10, 50);
-							System.out.println("Cadastro completo.\n");
-						} else {
-							System.out.println("Cadastro incompleto.\n");
-						}
-						
+						t.cadastrarAssinante(nome, cpf, numTelefone, 10, 10, 50);
 					} else if (tipo == 2) {
 						System.out.println("Insira seu nome: ");
 						nome = s.next();
@@ -172,19 +166,13 @@ public class Telefonia {
 						cpf = s.nextLong();
 						System.out.println("Insira seu número de telefone: ");
 						numTelefone = s.nextLong();
-						boolean cadastro = t.cadastrarAssinante(nome, cpf, numTelefone, 40f, 10);
-						if (cadastro) {
-							t.cadastrarAssinante(nome, cpf, numTelefone, 40f, 10);
-							System.out.println("Cadastro completo.\n");
-						} else {
-							System.out.println("Cadastro incompleto.\n");
-						}
+						t.cadastrarAssinante(nome, cpf, tipo, numTelefone, opcao);
 					} else {
 						System.out.println("Opção inexistente.");
 					}
 					break;
 				case 2: 
-					System.out.println(t.listarAssinantes() + "\n");
+					t.listarAssinantes();
 					break;
 				case 3: 
 					System.out.println("Insira seu CPF: ");
@@ -215,6 +203,7 @@ public class Telefonia {
 					break;
 				case 0: 
 					System.out.println("Encerrando sistema.");
+					break;
 				default: 
 					System.out.println("Insira uma opção válida.\n");
 			}
