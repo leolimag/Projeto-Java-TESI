@@ -64,8 +64,6 @@ public class PrePago extends Assinante {
 				} else {
 					return "Nenhuma chamada realizada neste mês.";
 				}
-			} else {
-				return "Não foi encontrada nenhuma chamada neste número.";
 			}
 		}
 		for (int i = 0; i < this.recargas.length; i++) {
@@ -77,8 +75,6 @@ public class PrePago extends Assinante {
 				} else {
 					return "Nenhuma recarga realizada neste mês.";
 				}
-			} else {
-				return "Não foi encontrada nenhuma recarga neste número.";
 			}
 		}
 		return "Total chamada: " + totalC + " | " + "Total recarga: " + totalR + " | " + this.creditos;

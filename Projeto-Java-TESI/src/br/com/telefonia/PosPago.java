@@ -33,9 +33,7 @@ public class PosPago extends Assinante {
 				} else {
 					return "Nenhuma chamada realizada neste mês.";
 				}
-			} else {
-				return "Não foi encontrada nenhuma chamada neste número.";
-			}
+			} 
 		}
 		return "Valor total da fatura: " + this.assinatura; //imprimir total (calcular ligações)
 	}
