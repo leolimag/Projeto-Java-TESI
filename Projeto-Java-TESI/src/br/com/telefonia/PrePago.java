@@ -12,57 +12,52 @@ public class PrePago extends Assinante {
 		super(cpf, nome, numero, numChamadas);
 		this.recargas = new Recarga[numRecargas];
 		this.creditos = creditos;
-		this.numRecargas = numRecargas;
 	}
 
-	public boolean recarregar(GregorianCalendar data, float valor) {
-		for (int i = 0; i < this.recargas.length; i++) {
+	public String recarregar(GregorianCalendar data, float valor) {
+		this.numRecargas++;
+		for (int i = 0; i < this.numRecargas; i++) {
 			if (this.recargas[i] == null) {
 				Recarga r = new Recarga(data, valor);
 				this.recargas[i] = r;
 				this.creditos = this.creditos + valor;
-				// this.numRecargas++;
-				return true;
-			} else {
-				return false; // se for falso, imprimir uma mensagem no main
-			}
+				return "Crédito no valor de R$" + valor + ",00 inserido.\n";
+			} 
 		}
-		return false;
+		return "Crédito não efetuado.\n";
 	}
 
 	public String fazerChamada(GregorianCalendar data, int duracao) {
 		float custo = duracao * 1.45f;
-		for (int i = 0; i < this.chamadas.length; i++) {
+		this.numChamadas++;
+		for (int i = 0; i < this.numChamadas; i++) {
 			if (this.chamadas[i] == null) {
 				if (this.creditos > custo) {
 					Chamada c = new Chamada(data, duracao);
 					this.chamadas[i] = c;
-					// this.numChamadas++;
 					this.creditos = this.creditos - custo;
 					return "Chamada concluída.";
 				} else {
-					return "Créditos insuficientes. Recarregue para fazer mais ligações!";
+					return "Créditos insuficientes. Recarregue para fazer mais ligações!\n";
 				}
-			} else {
-				return "Não é possível realizar mais ligações. Limite alcançado."; // se for false, imprimir uma
-																					// mensagem no main
 			}
 		}
-		return null;
+		return "Não é possível realizar mais ligações. Limite alcançado.\n";
 	}
 
-	public String imprimirFatura(int mes) {
+	public void imprimirFatura(int mes) {
 		float totalC = 0;
 		float totalR = 0;
+		System.out.println("Assinantes Pré-Pago: \n");
 		for (int i = 0; i < this.chamadas.length; i++) {
 			if (this.chamadas[i] != null) {
 				if (this.chamadas[i].getData().get(GregorianCalendar.MONTH) == mes) {
 					int duracao = this.chamadas[i].getDuracao();
 					float custo = duracao * 1.45f;
 					totalC += custo;
-					return "Assinante - " + this.toString() + "\n" + "Chamada - " + this.chamadas[i].toString() + "\n";
+					System.out.println("Assinante - " + this.toString() + "\n" + "Chamada - " + this.chamadas[i].toString() + "\n");
 				} else {
-					return "Nenhuma chamada realizada neste mês.";
+					System.out.println("Nenhuma chamada realizada neste mês.\n");
 				}
 			}
 		}
@@ -71,13 +66,13 @@ public class PrePago extends Assinante {
 				if (this.recargas[i].getData().get(GregorianCalendar.MONTH) == mes) {
 					float valor = this.recargas[i].getValor();
 					totalR += valor;
-					return "Recarga - " + this.recargas.toString();
+					System.out.println("Recarga - " + this.recargas.toString() + "\n");
 				} else {
-					return "Nenhuma recarga realizada neste mês.";
+					System.out.println("Nenhuma recarga realizada neste mês.\n");
 				}
 			}
 		}
-		return "Total chamada: " + totalC + " | " + "Total recarga: " + totalR + " | " + this.creditos;
+		System.out.println("Total chamada: " + totalC + " | " + "Total recarga: " + totalR + " | " + "Créditos: " + this.creditos + "\n");
 	}
 
 }

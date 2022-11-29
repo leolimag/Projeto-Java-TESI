@@ -10,32 +10,30 @@ public class PosPago extends Assinante {
 		this.assinatura = assinatura;
 	}
 	
-	public boolean fazerChamada(GregorianCalendar data, int duracao) {
-		float custo = duracao * 1.04f;
-		for (int i = 0; i < this.chamadas.length; i++) {
+	public String fazerChamada(GregorianCalendar data, int duracao) {
+		this.numChamadas++;
+		for (int i = 0; i < this.numChamadas; i++) {
 			if (this.chamadas[i] == null) {
 				Chamada c = new Chamada(data, duracao);
 				this.chamadas[i] = c;
-				//this.numChamadas++;
-				return true;
-			} else {
-				return false; //se for false, imprimir uma mensagem no main
-			}
+				return "Chamada concluída.";
+			} 
 		}
-		return false;
+		return "Chamada não efetuada.";
 	}
 	
-	public String imprimirFatura(int mes) {
+	public void imprimirFatura(int mes) {
+		System.out.println("Assinantes Pós-Pago: \n");
 		for (int i = 0; i < this.chamadas.length; i++) {
 			if (this.chamadas[i] != null) {
 				if (this.chamadas[i].getData().get(GregorianCalendar.MONTH) == mes) {
-					return "Assinante - " + this.toString() + "\n" + "Chamada - " + this.chamadas[i].toString() + "\n";
+					System.out.println("Assinante - " + this.toString() + "\n" + "Chamada - " + this.chamadas[i].toString() + "\n");
 				} else {
-					return "Nenhuma chamada realizada neste mês.";
+					System.out.println("Nenhuma chamada realizada neste mês.\n");
 				}
 			} 
 		}
-		return "Valor total da fatura: " + this.assinatura; //imprimir total (calcular ligações)
+		System.out.println("Valor total da fatura: " + this.assinatura + "\n"); 
 	}
 
 }
