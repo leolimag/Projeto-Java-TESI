@@ -7,13 +7,12 @@ public abstract class Assinante {
 	protected int numChamadas;
 	protected Chamada[] chamadas; 
 	
-	public Assinante(long cpf, String nome, long numero, int numChamadas) {
+	public Assinante(long cpf, String nome, long numero) {
 		super();
 		this.cpf = cpf;
 		this.nome = nome;
 		this.numero = numero;
-		this.numChamadas = numChamadas;
-		this.chamadas = new Chamada[numChamadas];
+		this.chamadas = new Chamada[50];
 	}
 
 	public long getCpf() {
