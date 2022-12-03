@@ -16,7 +16,7 @@ public abstract class Assinante {
 	}
 
 	public long getCpf() {
-		return cpf;
+		return this.cpf;
 	}
 	
 	@Override
