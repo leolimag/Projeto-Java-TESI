@@ -4,7 +4,7 @@ import java.util.GregorianCalendar;
 
 public class PrePago extends Assinante {
 
-	private float creditos;
+	protected float creditos;
 	private int numRecargas;
 	private Recarga[] recargas;
 
@@ -35,7 +35,7 @@ public class PrePago extends Assinante {
 					Chamada c = new Chamada(data, duracao);
 					this.chamadas[i] = c;
 					this.creditos = this.creditos - custo;
-					return "Chamada concluída.";
+					return "Chamada concluída.\n";
 			} else if (this.chamadas[i] == null && this.creditos < custo) {
 				this.numChamadas--;
 				return "Créditos insuficientes. Recarregue para fazer mais ligações!\n";
@@ -49,7 +49,7 @@ public class PrePago extends Assinante {
 		float totalR = 0;
 		System.out.println("Assinantes Pré-Pago: \n");
 		for (int i = 0; i < this.numChamadas; i++) {
-			if (this.chamadas[i] != null) {
+			if (this.chamadas[i] != null) { 
 				if (this.chamadas[i].getData().get(GregorianCalendar.MONTH) == mes) {
 					int duracao = this.chamadas[i].getDuracao();
 					float custo = duracao * 1.45f;
@@ -63,7 +63,7 @@ public class PrePago extends Assinante {
 
 		}
 		for (int i = 0; i < this.numRecargas; i++) {
-			if (this.recargas[i] != null) {
+			if (this.recargas[i] != null) { //diferente
 				if (this.recargas[i].getData().get(GregorianCalendar.MONTH) == mes) {
 					float valor = this.recargas[i].getValor();
 					totalR += valor;

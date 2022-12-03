@@ -11,8 +11,8 @@ public class Telefonia {
 
 	public Telefonia(int numPrePagos, int numPosPagos) {
 		super();
-		this.prepagos = new PrePago[numPrePagos];
-		this.pospagos = new PosPago[numPosPagos];
+		this.prepagos = new PrePago[50];
+		this.pospagos = new PosPago[50];
 	}
 
 	public void cadastrarAssinante(int opcao, String nome, long cpf, long numero, float creditos, float assinatura) {
@@ -114,15 +114,28 @@ public class Telefonia {
 	}
 
 	public void imprimirFaturas(int mes) {
+		if (this.numPrePagos == 0) {
+			System.out.println("Não há assinantes pré-pago cadastros.\n");
+		}
+		if (this.numPosPagos == 0) {
+			System.out.println("Não há assinantes pós-pago cadastros.\n");
+		}
+		
 		for (int i = 0; i < this.numPrePagos; i++) {
 			if (this.prepagos[i].numChamadas > 0) {
 				this.prepagos[i].imprimirFatura(mes);
-			} 
+			} else {
+				System.out.println("Assinantes Pré-Pago: \n");
+				System.out.println(this.prepagos[i].toString() + "\n" + "Não há movimentações deste assinante.\nCréditos: " + this.prepagos[i].creditos + "\n");	
+			}
 
 		}
 		for (int i = 0; i < this.numPosPagos; i++) {
 			if (this.pospagos[i].numChamadas > 0) {
 				this.pospagos[i].imprimirFatura(mes);
+			} else {
+				System.out.println("Assinantes Pós-Pago: \n");
+				System.out.println(this.pospagos[i].toString() + "\n" + "Não há movimentações deste assinante.\nAssinatura: " + this.pospagos[i].assinatura + "\n");	
 			}
 		}
 	}
